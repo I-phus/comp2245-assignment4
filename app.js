@@ -1,11 +1,20 @@
 document.addEventListener('DOMContentLoaded',function(){
 
-  let superheroSearchButton=document.getElementById('superheroSearchButton');
+  const superheroSearchButton=document.getElementById('superheroSearchButton');
+  const resultArea = document.getElementById('result');
+  const searchBox = document.getElementById('searchBox');
 
   superheroSearchButton.addEventListener('click',function(){
-    fetch('superheroes.php', {method: 'POST'})
+
+    const query = encodeURIComponent(searchBox.value.trim());
+
+    fetch(`superheroes.php?query=${query}`)
       .then(response => response.text())
-      .then(data => alert(data))        
+      .then(data => 
+        {
+          resultArea.innerHTML=data
+        })
+
       .catch(() => alert('An error occurred.')); 
     });
   });
